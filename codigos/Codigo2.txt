@@ -1,0 +1,47 @@
+int main()
+{
+
+  float n, m, a;
+  float raio, area, perimetro, pi;
+  int opcao;
+ do
+	{
+		
+		printf("\t\t\n OPCOES DE CALCULOS\n");
+		printf("\n 0. SAIR DO MENU \n");
+		printf("\n 1. CALCULAR A FORCA \n");
+		printf("\n 2. CALCULAR , AREA E  PERIMETRO DO CIRCULO \n");
+		printf("\n 3. RETORNAR AO MENU \n");
+		printf("\n Opcao: ");
+		scanf("%d", &opcao);
+		switch( opcao )
+		{
+		         case 0: 
+                                 printf("SAIR...\n");
+			         break;
+			case 1:
+					printf ("\n Digite a massa do objeto: ");
+					scanf("%f", &m);
+					printf ("\n Digite a aceleracao: ");
+					scanf("%f", &a);
+					n=(m*a);
+					printf("\n O calculo da forca e: %.2f \n", n);
+		        	break;
+			case 2:
+					printf("Digite o raio:");
+					scanf("%f", &raio);
+					pi = 3.141592;
+					area = pi*(raio * raio);
+					perimetro = 2.0 * pi * raio;
+					printf(" \n Raio: %.2f \n", raio);
+					printf(" \n Area: %.2f \n", area);
+					printf(" \n Perimetro: %.2f \n", perimetro);
+		         	break;
+		         	case 3: system("cls");
+                            break;
+            default: printf("OPCAO INVALIDA \n");
+       }
+    } while(opcao >0  && opcao <=3);
+    
+   return 1;	
+}

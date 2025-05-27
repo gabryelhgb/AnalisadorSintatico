@@ -25,6 +25,7 @@ Este projeto implementa um analisador léxico (lexer) em Java para análise de c
 - `Token.java`: constantes inteiras que definem cada tipo de token.
 - `TabelaDeSimbolos.java`: estrutura para armazenar tokens e suas descrições.
 - `ClassificacaoLexica.java`: classe para armazenar cada lexema classificado com token e linha.
+- `Principal.java`: classe main para execução do analisador.
 
 ---
 

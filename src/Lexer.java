@@ -26,6 +26,9 @@ public class Lexer {
         objTabelaDeSimbolos.adicionarSimbolo(Token.ABRE_PARENTESES, "ABRE PARENTESES");
         objTabelaDeSimbolos.adicionarSimbolo(Token.FECHA_PARENTESES, "FECHA PARENTESES");
         objTabelaDeSimbolos.adicionarSimbolo(Token.ASPAS, "ASPAS");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.PORCENTAGEM_D, "FORMATADOR %d");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.PORCENTAGEM_2F, "FORMATADOR %.2f");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.PORCENTAGEM_F, "FORMATADOR %f");
         objTabelaDeSimbolos.adicionarSimbolo(Token.MENSAGEM, "MENSAGEM");
         objTabelaDeSimbolos.adicionarSimbolo(Token.ADICAO, "ADIÇÃO");
         objTabelaDeSimbolos.adicionarSimbolo(Token.DOIS_PONTOS, "DOIS PONTOS");
@@ -40,12 +43,21 @@ public class Lexer {
         objTabelaDeSimbolos.adicionarSimbolo(Token.COUT, "COMANDO COUT");
 		objTabelaDeSimbolos.adicionarSimbolo(Token.RETURN, "COMANDO RETURN");
 		objTabelaDeSimbolos.adicionarSimbolo(Token.OU, "COMANDO OU");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.DO, "COMANDO DO");
         objTabelaDeSimbolos.adicionarSimbolo(Token.OPERADOR_MAIOR, "OPERADOR MAIOR");
         objTabelaDeSimbolos.adicionarSimbolo(Token.OPERADOR_MENOR, "OPERADOR MENOR");
         objTabelaDeSimbolos.adicionarSimbolo(Token.OPERADOR_SAIDA, "OPERADOR SAIDA");
         objTabelaDeSimbolos.adicionarSimbolo(Token.SUBTRACAO, "SUBTRAÇÃO");
         objTabelaDeSimbolos.adicionarSimbolo(Token.MULTIPLICACAO, "MULTIPLICAÇÃO");
         objTabelaDeSimbolos.adicionarSimbolo(Token.ERRO_DESCONHECIDO, " *** ERRO DESCONHECIDO! ***");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.WHILE, "COMANDO WHILE");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.DEFAULT, "COMANDO DEFAULT");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.BREAK, "COMANDO BREAK");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.SYSTEM_CLS, "COMANDO SYSTEM(\"CLS\")");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.SWITCH, "COMANDO SWITCH");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.CASE, "COMANDO CASE");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.ABRE_COLCHETE, "ABRE COLCHETE");
+        objTabelaDeSimbolos.adicionarSimbolo(Token.FECHA_COLCHETE, "FECHA COLCHETE");
     }
 
     // Função que recebe um lexema e retorna o token correspondente
@@ -61,14 +73,24 @@ public class Lexer {
             case "for": return Token.FOR;
             case "if": return Token.IF;
             case "else": return Token.ELSE;
+            case "do": return Token.DO;
             case "cout": return Token.COUT;
-			case "return": return Token.RETURN;
-			case "||": return Token.OU;
+            case "return": return Token.RETURN;
+            case "||": return Token.OU;
             case "=": return Token.ATRIBUICAO;
             case ";": return Token.PONTO_VIRGULA;
             case "&": return Token.ENDERECO;
-            case "%d": return Token.INTEIRO_DECIMAL;
-            case "%f": return Token.PONTO_FLUTUANTE;
+            case "%d": return Token.PORCENTAGEM_D;
+            case "%.2f": return Token.PORCENTAGEM_2F;
+            case "%f": return Token.PORCENTAGEM_F;
+            case "system(\"cls\")": return Token.SYSTEM_CLS;
+            case "switch": return Token.SWITCH;
+            case "case": return Token.CASE;
+            case "while": return Token.WHILE;
+            case "default": return Token.DEFAULT;
+            case "break": return Token.BREAK;
+            case "[": return Token.ABRE_COLCHETE;
+            case "]": return Token.FECHA_COLCHETE;
             case "{": return Token.ABRE_CHAVE;
             case "}": return Token.FECHA_CHAVE;
             case "(": return Token.ABRE_PARENTESES;
@@ -84,19 +106,17 @@ public class Lexer {
             case "*": return Token.MULTIPLICACAO;
         }
 
-		// Verifica se é uma mensagem entre aspas
-		if (lexema.startsWith("\"") && lexema.endsWith("\"")) {
-			return Token.MENSAGEM;
-		}
+        // Verifica se é uma mensagem entre aspas
+        if (lexema.startsWith("\"") && lexema.endsWith("\"")) {
+            return Token.MENSAGEM;
+        }
 
         // Verifica se é número inteiro
         if (tokenNumeroInteiro(lexema)) return Token.NUMERO_INTEIRO;
         // Verifica se é número float
         if (tokenNumeroFloat(lexema)) return Token.NUMERO_FLOAT;
-        // Verifica se é variável válida
+        // Só agora verifica se é variável válida
         if (tokenVariavel(lexema)) return Token.VARIAVEL;
-
-		
 
         // Se não reconhecido, retorna erro
         return Token.ERRO_DESCONHECIDO;
@@ -186,6 +206,13 @@ public class Lexer {
                 continue;
             }
 
+            // Reconhecer system("cls") como um único lexema
+            if (linha.startsWith("system(\"cls\")", i)) {
+                lexemas.add("system(\"cls\")");
+                i += "system(\"cls\")".length();
+                continue;
+            }
+
             // Reconhecer strings entre aspas ""
             if (c == '"') {
                 StringBuilder mensagem = new StringBuilder();
@@ -200,6 +227,25 @@ public class Lexer {
                     i++;
                 }
                 lexemas.add(mensagem.toString());
+                continue;
+            }
+
+            // Reconhecer %.2f
+            if (linha.startsWith("%.2f", i)) {
+                lexemas.add("%.2f");
+                i += 4;
+                continue;
+            }
+            // Reconhecer %d
+            if (linha.startsWith("%d", i)) {
+                lexemas.add("%d");
+                i += 2;
+                continue;
+            }
+            // Reconhecer %f
+            if (linha.startsWith("%f", i)) {
+                lexemas.add("%f");
+                i += 2;
                 continue;
             }
 
@@ -238,7 +284,7 @@ public class Lexer {
     }
 
     boolean isSimboloEspecial(char c) {
-        return "{}();=&:+,<>-*/\"".indexOf(c) >= 0;
+        return "{}();=&:+,<>-*/\"[]".indexOf(c) >= 0;
     }
 
     // Método para imprimir o relatório da análise léxica

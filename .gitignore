@@ -1,1 +1,22 @@
+# Ignorar arquivos e pastas de build
+/bin/
+/build/
+
+# Ignorar arquivos da IDE Eclipse
+.classpath
+.project
+.settings/
+
+# Ignorar arquivos da IDE IntelliJ
+*.iml
+.idea/
+
+# Ignorar arquivos do VS Code
 .vscode/
+
+# Ignorar arquivos temporários do sistema
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db

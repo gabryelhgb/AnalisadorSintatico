@@ -36,4 +36,16 @@ public class Token
 	public static final int OU = 33;
 	public static final int MENSAGEM = 34;
 	public static final int ERRO_DESCONHECIDO = 35;
+	public static final int WHILE = 36;
+	public static final int DEFAULT = 37;
+	public static final int BREAK = 38;
+	public static final int PORCENTAGEM_D = 39;      // %d
+	public static final int PORCENTAGEM_2F = 40;     // %.2f
+	public static final int PORCENTAGEM_F = 41;      // %f
+	public static final int SYSTEM_CLS = 42;         // system("cls")
+	public static final int SWITCH = 43;
+	public static final int CASE = 44;
+	public static final int ABRE_COLCHETE = 45;      // [
+	public static final int FECHA_COLCHETE = 46;     // ]
+	public static final int DO = 47;
 }

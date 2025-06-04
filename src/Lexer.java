@@ -3,9 +3,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Classe principal responsável pela análise léxica
 public class Lexer {
 
+	// Objeto da tabela de símbolos que armazena os tokens conhecidos
     public TabelaDeSimbolos objTabelaDeSimbolos = new TabelaDeSimbolos();
+    
+ // Lista que armazenará os resultados da análise léxica
     public static ArrayList<ClassificacaoLexica> ArrayListAnaliseLexica = new ArrayList<>();
 
     // Método para inicializar a tabela de símbolos
@@ -131,6 +135,7 @@ public class Lexer {
         return true;
     }
 
+ // Verifica se o lexema é um número float válido
     boolean tokenNumeroFloat(String lexema) {
         if (lexema.isEmpty()) return false;
         int countPoints = 0;
@@ -141,6 +146,7 @@ public class Lexer {
         return countPoints == 1;
     }
 
+    // Verifica se o lexema é uma variável válida
     boolean tokenVariavel(String lexema) {
         if (lexema.isEmpty()) return false;
         char first = lexema.charAt(0);
@@ -161,8 +167,10 @@ public class Lexer {
 
         System.out.println("\n\n ******* ANÁLISE LÉXICA ******* \n\n");
 
+     // Lê o arquivo linha por linha
         while (scanner.hasNextLine()) {
             String linhaTexto = scanner.nextLine().trim();
+         // Ignora linhas vazias
             if (linhaTexto.isEmpty()) {
                 linha++;
                 continue;
@@ -171,6 +179,7 @@ public class Lexer {
             // Lidar com comentários e strings:
             ArrayList<String> lexemas = quebrarLinhaEmLexemas(linhaTexto);
 
+         // Classifica cada lexema e armazena o resultado
             for (String lexema : lexemas) {
                 int token = classificarLexema(lexema);
                 ArrayListAnaliseLexica.add(new ClassificacaoLexica(lexema, token, linha));

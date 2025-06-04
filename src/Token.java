@@ -1,3 +1,7 @@
+//A classe Token atribui códigos numericos fixos para identificar 
+//os elementos do código, ajudando o compilador a entender a linguagem.
+
+
 public class Token 
 {
 	public static final int VOID = 0;

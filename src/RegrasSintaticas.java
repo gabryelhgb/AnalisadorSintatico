@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 
+//define regras sintáticas para analisar estruturas de um programa
 public class RegrasSintaticas {
 
+	// Verifica se a estrutura de início é válida
     boolean INICIO(ArrayList<ClassificacaoLexica> VetorAnaliseLexica)
     {
         // Aceita tanto VOID MAIN quanto INT MAIN
@@ -45,10 +47,10 @@ public class RegrasSintaticas {
                     return false;
                 }
             } else {
-                if (tk == Token.VIRGULA) {
+                if (tk == Token.VIRGULA) {// próxima variável
                     esperandoVariavel = true;
                     i++;
-                } else if (tk == Token.PONTO_VIRGULA) {
+                } else if (tk == Token.PONTO_VIRGULA) {// fim da declaração
                     return true;
                 } else {
                     return false;
@@ -83,7 +85,7 @@ public class RegrasSintaticas {
                 }
             }
             if (VetorAnaliseLexica.get(tamanho - 1).Token == Token.PONTO_VIRGULA) {
-                return true;
+                return true; // deve terminar com ;
             }
         }
         return false;

@@ -1,22 +1,25 @@
 import java.util.ArrayList;
 
-
+//realiza a análise sintática de um código-fonte.
 public class AnalisadorSintatico 
 {
+	// Objeto que contém as regras sintáticas a serem verificadas.
 	RegrasSintaticas objetoRegrasSintaticas;
+	// Vetor contendo a análise léxica realizada anteriormente (lista de tokens classificados)
 	ArrayList <ClassificacaoLexica> VetorAnaliseLexica;
 	
 	public AnalisadorSintatico()
 	{
 	objetoRegrasSintaticas = new RegrasSintaticas();
-	VetorAnaliseLexica = Lexer.ArrayListAnaliseLexica;
+	VetorAnaliseLexica = Lexer.ArrayListAnaliseLexica; // Usa os dados já processados pelo Lexer.
 	}
 	
-	// Agora retorna 1 se houver erro de balanceamento, 0 se não houver
+	// Agora retorna 1 se houver erro de balanceamento nos simbolos, 0 se não houver
     int verificarBalanceamento() {
         int chaves = 0, parenteses = 0, colchetes = 0, aspas = 0;
         boolean erro = false;
 
+     // Percorre todos os tokens encontrados pelo analisador léxico.
         for (ClassificacaoLexica obj : VetorAnaliseLexica) {
             switch (obj.Token) {
                 case Token.ABRE_CHAVE: chaves++; break;
@@ -27,15 +30,17 @@ public class AnalisadorSintatico
                 case Token.FECHA_COLCHETE: colchetes--; break;
                 case Token.ASPAS: aspas++; break;
             }
+            // Se houver fechamento sem abertura correspondente
             if (chaves < 0 || parenteses < 0 || colchetes < 0) {
                 erro = true;
                 break;
             }
         }
+     // Verifica se todos os símbolos foram fechados corretamente
         if (chaves != 0 || parenteses != 0 || colchetes != 0 || (aspas % 2 != 0)) {
             erro = true;
         }
-
+     // Exibe mensagem de erro se houver desequilíbrio nos símbolos
         if (erro) {
             System.out.println("\n*** ERRO DE BALANCEAMENTO: Verifique se todas as chaves, parênteses, colchetes e aspas estão corretamente fechados! ***\n");
             return 1;
@@ -43,6 +48,7 @@ public class AnalisadorSintatico
         return 0;
     }
 
+ // Função principal que realiza a análise sintática linha por linha
 	void AnaliseSintatica()
 	{
 		//verificar a linha 1 - Inicialização do programa
@@ -54,6 +60,7 @@ public class AnalisadorSintatico
 			boolean ProgramaSemErros = true;
 			int QuantidadeErros = 0;
 			
+			// Percorre cada linha do código-fonte
 			while (LinhaAtual <= QuantidadeTotalLinhas)
 			{
 				ArrayList<ClassificacaoLexica> VetorAnalise = new ArrayList<>();
@@ -93,6 +100,7 @@ public class AnalisadorSintatico
 			int errosBalanceamento = verificarBalanceamento();
 			QuantidadeErros += errosBalanceamento;
 
+			 // Exibe mensagem de sucesso ou quantidade de erros
 			if(ProgramaSemErros && errosBalanceamento == 0)
 				System.out.println(" \n Analise Sintatica concluida com sucesso! ZERO erros");
 			else

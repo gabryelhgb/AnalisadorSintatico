@@ -48,9 +48,9 @@ public class Principal {
 				
 			}
 		}
-		else
+		else // Se a pessoa não selecionou um arquivo
 		{
-			System.out.println("Nenhum arquivo selecionado.");
+			System.out.println("Nenhum arquivo selecionado."); 
 		}
 	}
 
